@@ -1,4 +1,4 @@
-Config { font = "xft:monospace:pixelsize=18:antialias=true:hinting=true"
+Config { font = "xft:monospace:pixelsize=15:antialias=true:hinting=true"
        , additionalFonts = []
        , borderColor = "black"
        , border = TopB
