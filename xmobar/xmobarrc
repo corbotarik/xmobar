@@ -1,4 +1,4 @@
-Config { font = "xft:monospace:pixelsize=15:antialias=true:hinting=true"
+Config { font = "xft:FontAwesome:pixelsize=15:antialias=true:hinting=true, monospace:pixelsize=15:antialias=true:hinting=true" 
        , additionalFonts = []
        , borderColor = "black"
        , border = TopB
@@ -17,15 +17,36 @@ Config { font = "xft:monospace:pixelsize=15:antialias=true:hinting=true"
        , overrideRedirect = True
        , commands = [ 
 
-                      Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                      Run Cpu [ "--template" , " <total>%",
+                      "-L","3","-H","50",
+                               "--normal","#bbbbbb","--high","#bbbbbb"] 10
+                               
+                    , Run StdinReader           
+
+
+                    , Run Battery        [ "--template" , "  <left>%"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "#bbbbbb"
+                             , "--normal"   , "#bbbbbb"
+                             , "--high"     , "#bbbbbb"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520></fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000></fc>"
+                             ] 50
+                    
+                    , Run Memory ["-t"," <usedratio>%"] 10
                     
                     
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "  %cpu% | %memory% }\
-                    \{ <fc=#ee9a00>%date%</fc>  "
+       , template = "     %StdinReader%}\
+                    \{%cpu%   %battery%   <fc=#4771b5>%date%</fc>  "
        }
