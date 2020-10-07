@@ -2,8 +2,8 @@ Config { font = "xft:FontAwesome:pixelsize=15:antialias=true:hinting=true, monos
        , additionalFonts = []
        , borderColor = "black"
        , border = TopB
-       , bgColor = "#303030"
-       , fgColor = "#bbbbbb"
+       , bgColor = "#0F0E1C"
+       , fgColor = "#E2E2EA"
        , alpha = 255
        , position = Top
        , textOffset = -3
@@ -19,17 +19,20 @@ Config { font = "xft:FontAwesome:pixelsize=15:antialias=true:hinting=true, monos
 
                       Run Cpu [ "--template" , " <total>%",
                       "-L","3","-H","50",
-                               "--normal","#bbbbbb","--high","#bbbbbb"] 10
+                               "--normal","#7AE0AE","--high","#E87979"] 10
                                
-                    , Run StdinReader           
+                    , Run StdinReader    
+                    
+                    , Run Kbd [("ba", "BA"), ("us", "US")] 
+      
 
 
                     , Run Battery        [ "--template" , "  <left>%"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "#bbbbbb"
-                             , "--normal"   , "#bbbbbb"
-                             , "--high"     , "#bbbbbb"
+                             , "--low"      , "#E87979"
+                             , "--normal"   , "#B3B2C8"
+                             , "--high"     , "#7AE0AE"
 
                              , "--" -- battery specific options
                                        -- discharging status
@@ -40,13 +43,12 @@ Config { font = "xft:FontAwesome:pixelsize=15:antialias=true:hinting=true, monos
                                        , "-i"	, "<fc=#006000></fc>"
                              ] 50
                     
-                    , Run Memory ["-t"," <usedratio>%"] 10
+                    , Run Memory ["-t"," <usedratio>%"] 10
                     
                     
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "     %StdinReader%}\
-                    \{%cpu%   %battery%   <fc=#4771b5>%date%</fc>  "
+       , template = "     %StdinReader%  }<fc=#59A2BE>%date%</fc>{%memory%   %cpu%   %battery%   %kbd%  "
        }
