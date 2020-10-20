@@ -1,0 +1,62 @@
+Config { font = "xft:FontAwesome:pixelsize=15:antialias=true:hinting=true, monospace:pixelsize=15:antialias=true:hinting=true" 
+       , additionalFonts = []
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "#0F0E1C"
+       , fgColor = "#E2E2EA"
+       , alpha = 255
+       , position = Top
+       , textOffset = -3
+       , iconOffset = -3
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ 
+
+                      Run Cpu [ "--template" , " <total>%",
+                      "-L","3","-H","50",
+                               "--normal","#7AE0AE","--high","#E87979"] 10
+                               
+                    , Run StdinReader    
+                    
+                    , Run Kbd [("ba", "BA"), ("us", "US")] 
+                    
+                    , Run DynNetwork     [ "--template" , " <rx>kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "#B3B2C8"
+                             , "--normal"   , "#B3B2C8"
+                             , "--high"     , "#7AE0AE"
+                             ] 10
+      
+
+
+                    , Run Battery        [ "--template" , "  <left>%"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "#E87979"
+                             , "--normal"   , "#B3B2C8"
+                             , "--high"     , "#7AE0AE"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520></fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000></fc>"
+                             ] 50
+                    
+                    , Run Memory ["-t"," <usedratio>%"] 10
+                    
+                    
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "     %StdinReader%  }<fc=#59A2BE>%date%</fc>{%dynnetwork%   %memory%   %cpu%   %battery%   %kbd%  "
+       }
